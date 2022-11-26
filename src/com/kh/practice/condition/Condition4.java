@@ -7,10 +7,18 @@ public class Condition4 {
         Scanner sc = new Scanner(System.in);
         System.out.print("정수 1 : ");
         int num1 = sc.nextInt();
-        System.out.println("정수 2 : ");
+        System.out.print("정수 2 : ");
         int num2 = sc.nextInt();
-        System.out.println("입력 : ");
+        System.out.print("입력 : ");
         int num3 = sc.nextInt();
+
+        if(num1 < num2) {
+            boolean result = (num1 >= num3 || num2 < num3) ? true : false;
+            System.out.println(result);
+        } else{
+            System.out.println("정수1은 정수2 보다 작아야한다.");
+        }
+
 
     }
 }
