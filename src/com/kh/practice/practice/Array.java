@@ -39,30 +39,40 @@ public class Array {
         String[] arr = new String[size];
 
         for (int i = 0; i < size; i++) {
-            System.out.println((i + 1) + "번째 문자열 : ");
+            System.out.print((i + 1) + "번째 문자열 : ");
             arr[i] = sc.next();
         }
 
-        System.out.println("더 값을 입력하시겠습니까?");
-        char ch = sc.next().charAt(0);
+        while (true) {
+            System.out.print("더 값을 입력하시겠습니까?");
+            char ch = sc.next().charAt(0);
+            if (ch == 'N' || ch == 'n') {
+                for (int i = 0; i < arr.length; i++) {
+                  //  System.out.print("%s, %s, "arr[i]);
+                    }
+                }
+                break;
+            }
 
-        System.out.println("더 입력하고 싶은 개수 : ");
-        size = sc.nextInt();
-        String copy[];
-        for (int i = 0; i < arr.length; i++) {
-         //   copy[i] =
+            System.out.print("더 입력하고 싶은 개수 : ");
+            int size2 = sc.nextInt();
+            String copy[] = new String[size + size2];
+            for (int i = 0; i < size2; i++) {
+                System.out.println(size + size2 + "번째 문자열 : ");
+                copy[size + i + 1] = sc.next();
+            }
+            for (int i = 0; i < arr.length; i++) {
+                copy[i] = arr[i];
+            }
 
-
-        }
-
-        if (ch == 'n' || ch == 'n') {
-            System.out.print("[");
+//            if (ch == 'n' || ch == 'n') {
+//                System.out.print("[");
 //            for (int i = 0; i < copy.langth; i++) {
 //                System.out.print(arr[i] + ", ");
 //            }
-            System.out.print("]");
-        }
-
+//                System.out.print("]");
+//            }
+//       }
 
     }
 }
