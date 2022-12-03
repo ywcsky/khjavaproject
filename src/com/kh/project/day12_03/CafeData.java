@@ -23,29 +23,10 @@ public class CafeData {
             this.orderCount = orderCount;
     }
 
-    public int getOrderCount() {
-        return orderCount;
-    }
-
-    public void setOrderCount(int orderCount) {
-        this.orderCount = orderCount;
-    }
-
-    public int[] getOrderCoffee() {
-        return orderCoffee;
-    }
-
-    public void setOrderCoffee(int[] orderCoffee) {
-        this.orderCoffee = orderCoffee;
-    }
-
     public void setPrice(int price) {
         this.price = price;
     }
 
-    public int getPrice() {
-        return price;
-    }
     public void setCoffeeCount(int coffeeCount){
         this.coffeeCount += coffeeCount;
     }

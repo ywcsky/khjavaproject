@@ -1,6 +1,5 @@
 package com.kh.project.day12_03;
 
-import java.awt.print.Pageable;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
