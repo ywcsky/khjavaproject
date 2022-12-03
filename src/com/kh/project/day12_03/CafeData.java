@@ -3,11 +3,11 @@ package com.kh.project.day12_03;
 public class CafeData {
     private int coffeePrice;
     private String coffeeName;
-    private int coffeeCount, price,orderCount;
-    int [] orderCoffee = new int[5];
+    private int coffeeCount, price, orderCount;
+    int[] orderCoffee = new int[5];
 
     public CafeData(int[] orderCoffee) {
-        for(int i = 0; i < orderCoffee.length; i++){
+        for (int i = 0; i < orderCoffee.length; i++) {
             this.orderCoffee[i] = 0;
         }
     }
@@ -15,19 +15,19 @@ public class CafeData {
     public CafeData() {
     }
 
-    public CafeData(int coffeePrice, String coffeeName, int coffeeCount, int price,int orderCoffee, int orderCount) {
-            this.coffeeName = coffeeName;
-            this.coffeePrice = coffeePrice;
-            this.coffeeCount = coffeeCount;
-            this.price = price;
-            this.orderCount = orderCount;
+    public CafeData(int coffeePrice, String coffeeName, int coffeeCount, int price, int orderCoffee, int orderCount) {
+        this.coffeeName = coffeeName;
+        this.coffeePrice = coffeePrice;
+        this.coffeeCount = coffeeCount;
+        this.price = price;
+        this.orderCount = orderCount;
     }
 
     public void setPrice(int price) {
         this.price = price;
     }
 
-    public void setCoffeeCount(int coffeeCount){
+    public void setCoffeeCount(int coffeeCount) {
         this.coffeeCount += coffeeCount;
     }
 
@@ -39,7 +39,7 @@ public class CafeData {
         return coffeeName;
     }
 
-    public int getCoffeeCount(){
+    public int getCoffeeCount() {
         return coffeeCount;
     }
 

@@ -7,13 +7,42 @@ public class CafeFunction {
     Scanner sc = new Scanner(System.in);
     CafeData cd2 = new CafeData();
     CafeData[] cd;
-    int num, menu, coffeeCount = cd2.getCoffeeCount(), orderNum, choice, sum;
+    int num, menu, coffeeCount = cd2.getCoffeeCount(), orderNum, choice, sum, orderNumber = 1;
     char yn;
 
     public CafeFunction() {
         cd = new CafeData[5];
         for (int i = 0; i < cd.length; i++) {
             cd[i] = new CafeData();
+        }
+    }
+
+    // 성공메시지
+    public void cafeSuccessMessage(int para) {
+        if (para == 1) {
+            System.out.println("┌─────────────────────────────────┐");
+            System.out.println("│                                 │");
+            System.out.println("│       등록에 성공 하였습니다.       │");
+            System.out.println("│                                 │");
+            System.out.println("└─────────────────────────────────┘");
+        } else if (para == 2) {
+            System.out.println("┌─────────────────────────────────┐");
+            System.out.println("│       주문이 완료 되었습니다.       │");
+            System.out.println("│          주문번호 : " + orderNumber + "             │");
+            System.out.println("│             감사합니다.           │");
+            System.out.println("└─────────────────────────────────┘");
+        } else if (para == 3) {
+            System.out.println("┌─────────────────────────────────┐");
+            System.out.println("│                                 │");
+            System.out.println("│       등록에 실패 하였습니다.       │");
+            System.out.println("│                                 │");
+            System.out.println("└─────────────────────────────────┘");
+        } else if (para == 4) {
+            System.out.println("┌─────────────────────────────────┐");
+            System.out.println("│                                 │");
+            System.out.println("│        변경이 완료되었습니다.       │");
+            System.out.println("│                                 │");
+            System.out.println("└─────────────────────────────────┘");
         }
     }
 
@@ -117,6 +146,7 @@ public class CafeFunction {
             if (yn == 'y' || yn == 'Y') {
 
             } else if (yn == 'N' || yn == 'n') {
+                cafeSuccessMessage(1);
                 cafeMenuEdit();
                 break;
             } else {
@@ -125,6 +155,7 @@ public class CafeFunction {
             }
         }
         if (coffeeCount == 5) System.out.println("최대 등록 수에 도달하였습니다.");
+        cafeSuccessMessage(3);
     }
 
     // 커피 금액 변경
@@ -135,23 +166,31 @@ public class CafeFunction {
         }
         System.out.println("====================================");
         System.out.print("해당 커피 선택 (뒤로 : 6) : ");
+
         try {
             choice = sc.nextInt();
-        } catch (InputMismatchException e) {
-            System.out.println("올바른 값을 입력해주세요.");
-            sc.next();
-            cafeMenuEdit();
-        }
-        if (choice == 6) {
-            cafeMenuEdit();
-        }
-        System.out.print("변경 금액 : ");
-        try {
+            if (choice == 6) {
+                cafeMenuEdit();
+            }
+            System.out.print("변경 금액 : ");
             cd[choice - 1].setCoffeePrice(sc.nextInt());
+            cafeSuccessMessage(4);
+            cafeMenuEdit();
+            System.out.println("올바른 값을 입력해주세요.");
+            sc.next();
+            cafeSuccessMessage(3);
+            coffeePriceEdit();
         } catch (InputMismatchException e) {
             System.out.println("올바른 값을 입력해주세요.");
             sc.next();
+            cafeMenuEdit();
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("위 목록에서 선택해주세요.");
+            cafeSuccessMessage(3);
+            coffeePriceEdit();
         }
+
+
     }
 
     // 커피 주문탭 출력
@@ -163,26 +202,37 @@ public class CafeFunction {
         }
         System.out.println("====================================");
         System.out.print("커피 선택 : ");
-        orderNum = sc.nextInt() - 1;
-        if (orderNum == 1003) {
-            cafeMain();
-        }
-        System.out.print("주문 수 : ");
-        num += sc.nextInt();
-        cd2.orderCoffee[orderNum] = num;
-
-        orderPrice(menu);
-        System.out.println("추가 주문 진행 진행 여부 (Y or N) : ");
-        switch (sc.next().charAt(0)) {
-            case 'Y':
-            case 'y':
-                System.out.println("추가 주문 진행합니다.");
+        try {
+            orderNum = sc.nextInt() - 1;
+            if (orderNum == 1003) {
+                cafeMain();
+            }
+            if (cd[orderNumber - 1].getCoffeeName() == null) {
+                System.out.println("등록된 값이 없습니다.");
+                System.out.println("다시 선택해주세요.");
                 cafeMenu();
-                break;
-            case 'N':
-            case 'n':
-                orderPage();
-                break;
+            }
+            System.out.print("주문 수 : ");
+            num += sc.nextInt();
+            cd2.orderCoffee[orderNum] = num;
+
+            orderPrice(menu);
+            System.out.println("추가 주문 진행 진행 여부 (Y or N) : ");
+            switch (sc.next().charAt(0)) {
+                case 'Y':
+                case 'y':
+                    System.out.println("추가 주문 진행합니다.");
+                    cafeMenu();
+                    break;
+                case 'N':
+                case 'n':
+                    orderPage();
+                    break;
+            }
+        }catch (InputMismatchException e){
+            System.out.println("올바른 값을 입력해주세요.");
+            sc.next();
+            cafeMenu();
         }
     }
 
@@ -207,7 +257,8 @@ public class CafeFunction {
                 System.out.println("결제 수단 선택 : 1. 카드  2. 현금");
                 choice = sc.nextInt();
                 if (choice == 1 || choice == 2) {
-                    System.out.println("감삼다 맛나게 드세요~~^^***");
+                    cafeSuccessMessage(2);
+                    orderNumber++;
                     break;
                 } else {
                     System.out.println("위 결제 수단중 하나를 선택하세요~");
