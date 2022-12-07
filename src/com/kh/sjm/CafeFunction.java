@@ -1,4 +1,4 @@
-package com.kh.project.day12_03;
+package com.kh.sjm;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -7,7 +7,7 @@ public class CafeFunction {
     Scanner sc = new Scanner(System.in);
     CafeData cd2 = new CafeData();
     CafeData[] cd;
-    int num, menu, coffeeCount = cd2.getCoffeeCount(), orderNum, choice, sum, orderNumber = 1;
+    int num, menu, coffeeCount = cd2.getCoffeeCount(), orderNum, choice, sum, orderNumber = 1, number = 0;
     char yn;
 
     public CafeFunction() {
@@ -22,25 +22,25 @@ public class CafeFunction {
         if (para == 1) {
             System.out.println("┌─────────────────────────────────┐");
             System.out.println("│                                 │");
-            System.out.println("│       등록에 성공 하였습니다.       │");
+            System.out.println("│       등록에 성공 하였습니다.      │");
             System.out.println("│                                 │");
             System.out.println("└─────────────────────────────────┘");
         } else if (para == 2) {
             System.out.println("┌─────────────────────────────────┐");
-            System.out.println("│       주문이 완료 되었습니다.       │");
-            System.out.println("│          주문번호 : " + orderNumber + "             │");
-            System.out.println("│             감사합니다.           │");
+            System.out.println("│       주문이 완료 되었습니다.      │");
+            System.out.println("│          주문번호 : " + orderNumber + "            │");
+            System.out.println("│             감사합니다.          │");
             System.out.println("└─────────────────────────────────┘");
         } else if (para == 3) {
             System.out.println("┌─────────────────────────────────┐");
             System.out.println("│                                 │");
-            System.out.println("│       등록에 실패 하였습니다.       │");
+            System.out.println("│       등록에 실패 하였습니다.      │");
             System.out.println("│                                 │");
             System.out.println("└─────────────────────────────────┘");
         } else if (para == 4) {
             System.out.println("┌─────────────────────────────────┐");
             System.out.println("│                                 │");
-            System.out.println("│        변경이 완료되었습니다.       │");
+            System.out.println("│        변경이 완료되었습니다.      │");
             System.out.println("│                                 │");
             System.out.println("└─────────────────────────────────┘");
         }
