@@ -1,9 +1,6 @@
 package com.kh.day12.iostream.bufferedtream;
 
-import java.io.BufferedOutputStream;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.Scanner;
 
 public class Exam_BufferedStream {
@@ -32,6 +29,6 @@ public class Exam_BufferedStream {
                 e.printStackTrace();
             }
         }
-
     }
+
 }
