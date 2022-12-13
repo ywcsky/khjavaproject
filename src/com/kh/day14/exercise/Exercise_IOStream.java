@@ -3,26 +3,20 @@ package com.kh.day14.exercise;
 import java.io.*;
 import java.sql.Statement;
 import java.util.Scanner;
+import java.util.StringTokenizer;
 
 public class Exercise_IOStream {
     static Scanner sc = new Scanner(System.in);
-    static String name, address;
-    static int age;
+    private static String name, address;
+    private static int age;
     static InputStream is = null;
-    static OutputStream os = null;
-    static DataOutputStream dos = new DataOutputStream(os);
+    static Writer os = null;
 
 
     public static void main(String[] args) {
-        int end = 0;
+        end:
         while (true) {
-            System.out.println("1. 정보입력");
-            System.out.println("2. 정보출력");
-            System.out.println("3. 정보저장(save)");
-            System.out.println("4. 정보불러오기(load)");
-            System.out.println("0. 종료");
-            System.out.print("메뉴입력 : ");
-            int choice = sc.nextInt();
+            int choice = menu();
             switch (choice) {
                 case 1:
                     insert();
@@ -37,18 +31,30 @@ public class Exercise_IOStream {
                     load();
                     break;
                 case 0:
-                    end = 1;
-                    break;
+                    break end;
+                default:
+                    System.out.println("0~4 사이의 숫자 입력해주세요.");
             }
-            if (end == 1) break;
         }
 
     }
 
+    public static int menu() {
+        System.out.println("1. 정보입력");
+        System.out.println("2. 정보출력");
+        System.out.println("3. 정보저장(save)");
+        System.out.println("4. 정보불러오기(load)");
+        System.out.println("0. 종료");
+        System.out.print("메뉴입력 : ");
+        int select = sc.nextInt();
+        System.out.println("=== === === === === ===");
+        return select;
+
+    }
+
     public static void insert() {
-        sc.nextLine();
         System.out.print("이름 : ");
-        name = sc.nextLine();
+        name = sc.next();
         System.out.print("나이 : ");
         age = sc.nextInt();
         sc.nextLine();
@@ -57,18 +63,22 @@ public class Exercise_IOStream {
     }
 
     public static void print() {
+        System.out.println("======= 정보 출력 =======");
         System.out.println("이름 : " + name);
         System.out.println("나이 : " + age);
         System.out.println("주소 : " + address);
+        System.out.println("=== === === === === ===");
     }
 
     public static void save() {
         try {
-            os = new FileOutputStream("src/file/" + name + ".txt");
-            Writer writer = new FileWriter("src/file" + name + ".txt");
-            writer.write(name +"/"+age +"/"+address);
-            writer.flush();
-            writer.close();
+            Writer os = new FileWriter("src/iostream/" + name + ".txt");
+            String result = name + "/" + age + "/" + address;
+            os.write(result);
+            System.out.println("저장 완료");
+            System.out.println("=== === === === === ===");
+            os.flush();
+            os.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -76,15 +86,21 @@ public class Exercise_IOStream {
     }
 
     public static void load() {
-        System.out.println("파일명 입력");
-        String fileName = sc.nextLine();
+        String result = "";
         try {
-            Reader reader = new FileReader("scr/file/" + name + ".txt");
-            String readData = String.valueOf(reader.read());
-            String[] arr = readData.split("/");
-            name = arr[0];
-            age = Integer.parseInt(arr[1]);
-            address = arr[2];
+            BufferedReader bfReader = null;
+            System.out.println("파일명 입력");
+            String fileName = sc.next();
+            Reader reader = new FileReader("src/iostream/" + fileName + ".txt");
+            bfReader = new BufferedReader(reader);
+            result = bfReader.readLine();
+            //1. split(), 2. StringTokenizer
+            StringTokenizer st = new StringTokenizer(result,"/");
+            name = st.nextToken();
+            age = Integer.parseInt(st.nextToken());
+            address = st.nextToken();
+            System.out.println("로드 완료");
+            System.out.println("=== === === === === ===");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
