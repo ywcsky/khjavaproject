@@ -22,18 +22,35 @@ public class BaseballClient {
             os = socket.getOutputStream();
             dis = new DataInputStream(is);
             dos = new DataOutputStream(os);
-            System.out.println("게임 준비 완료");
+                System.out.println("게임 준비 완료");
+while (true){
+                // 값 보내기
+                System.out.print("-->");
+                String input = sc.nextLine();
+                dos.writeUTF(input);
 
-            // 값 보내기
-            System.out.print("-->");
-            String input = sc.nextLine();
-            dos.writeUTF(input);
+                //값 받기
+                String resultMsg = dis.readUTF();
+                System.out.println(resultMsg);
+                if(resultMsg.startsWith("3")){
+                    System.out.println("아웃으로 게임 종료");
+                    break;
+                }
 
-
-
-
-        } catch (IOException e) {
+            }
+        } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            try {
+                is.close();
+                os.close();
+                dis.close();
+                dos.close();
+                socket.close();
+                sc.close();
+            } catch (IOException e){
+                e.printStackTrace();
+            }
         }
     }
 }

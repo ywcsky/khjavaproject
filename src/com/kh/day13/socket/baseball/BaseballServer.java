@@ -3,6 +3,8 @@ package com.kh.day13.socket.baseball;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Objects;
 import java.util.Random;
 
@@ -16,10 +18,13 @@ public class BaseballServer {
         DataInputStream dis = null;
         DataOutputStream dos = null;
         int[] numbers = new int[3];
+        Date date = new Date();
+        SimpleDateFormat trans = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SS");
         try {
             System.out.println("서버소켓을 생성하였습니다.");
             serverSocket = new ServerSocket(port);
             Thread.sleep(2000);
+            System.out.println(trans.format(date));
             System.out.println("클라이언트의 접속을 기다립니다.");
             Socket socket = serverSocket.accept();
             System.out.println("클라이언트가 접속했습니다.");
@@ -44,13 +49,11 @@ public class BaseballServer {
                 }
             }
 
-            String[] numbersString = new String[3];
-            for(int i = 0; i < numbers.length;i++){
-                numbersString[i] = String.valueOf(numbers[i]);
-            }
 
             System.out.println("서버 숫자 ->" + numbers[0] + " " + numbers[1] + " " + numbers[2]);
             System.out.println("숫자 준비 완료");
+
+            while(true) {
             // 값 받기
             String readNum = dis.readUTF();
             System.out.println("받기 : " + readNum);
@@ -59,33 +62,59 @@ public class BaseballServer {
             // 숫자는 맞는데 위치는 틀린지
             // 아무것도 맞지 않았는지
             // 스트라이크, 볼로 출력한다.
+            // 1. 배열과 배열 비교
+            //split을 통한 숫자값을 배열로 저장
+//
+//                String[] num = new String[3];
+//                for (int i = 0; i < readNum.length(); i++) {
+//                    num[i] = String.valueOf(readNum.charAt(i));
+//                    System.out.println("받은 값 : " + num[i]);
+//                }
+//
+//
+//                for (int i = 0; i < readNum.length(); i++) {
+//                    if (num[i].equals(numbersString[i])) {
+//                        strike++;
+//                    }
+//                    for (int j = 0; j < readNum.length(); j++) {
+//                        if (!Objects.equals(num[i], numbersString[i]) && Objects.equals(num[i], numbersString[j])) {
+//                            ball++;
+//                        }
+//                    }
+//                }
             int strike = 0, ball = 0;
 
-            String[] num = new String[3];
-            for (int i = 0; i < readNum.length(); i++) {
-                num[i] = String.valueOf(readNum.charAt(i));
-                System.out.println(num[i]);
-            }
-
-
-            for (int i = 0; i < readNum.length(); i++) {
-                if (Objects.equals(num[i], numbersString[i])) {
-                    strike++;
-                }
-                for (int j = 0; j < readNum.length(); j++) {
-                    if (!Objects.equals(num[i], numbersString[i]) && Objects.equals(num[i], numbersString[j])) {
-                        ball++;
+            String[] readNums = readNum.split("");
+            for (int i = 0; i < numbers.length; i++) {
+                for (int j = 0; j < readNums.length; j++) {
+                    if (numbers[i] == Integer.parseInt(readNums[j])) {
+                        if (i == j) {
+                            strike++;
+                        } else {
+                            ball++;
+                        }
                     }
                 }
             }
+            // 클라이언트로 결과값 보내주기
+            String result = strike + "스트라이크 , " + ball + "볼";
+            dos.writeUTF(result);
+            // 스트라이크가 3이면 게임 종료
+                if(strike == 3)break;
+                }
 
-            System.out.println("스트라이크 : " + strike + ", 볼 : " + ball);
-
-
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        }  finally {
+            try{
+                dos.close();
+                dis.close();
+                is.close();
+                os.close();
+                serverSocket.close();
+            } catch (IOException e){
+                e.printStackTrace();
+            }
         }
 
 
