@@ -41,17 +41,24 @@ public class Run {
                     break;
                 case 5 :
                     String updateId = view.updateMember();
-                    int updateindex = mCon.findUpdateInfo(updateId);
-                    if(updateindex == -1){
+                    int updateNo = mCon.findUpdateNo(updateId);
+                    if(updateNo == -1) {
                         System.out.println("없는 아이디 입니다.");
                         break;
                     }
-                    Member updateMember = mCon.updateInfo(updateindex);
-                    int updateindex2 = view.updateInfom();
-                    view.updateInfomtion(updateMember,updateindex2);
-
+                    int updateChoice = view.upDateInform();
+                    String upDateData = view.upDateData();
+                    mCon.upDateInformation(updateNo,updateChoice,upDateData);
                     break;
-                case 6 : break;
+                case 6 :
+                    String deleteId = view.deleteId();
+                    int deleteIdNo = mCon.deleteIdNo(deleteId);
+                    if(deleteIdNo == 1){
+                        System.out.println("없는 아이디 입니다.");
+                        break;
+                    }
+                    mCon.deleteId(deleteIdNo);
+                    break;
                 case 0 : break end;
             }
         }

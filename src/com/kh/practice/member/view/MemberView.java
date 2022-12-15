@@ -102,12 +102,12 @@ public class MemberView {
     }
 
     public String updateMember(){
-        System.out.println("수정할 정보의 아이디 입력 : ");
+        System.out.print("수정할 정보의 아이디 입력 : ");
         String updateId = sc.next();
         return updateId;
     }
 
-    public int updateInfom(){
+    public int upDateInform(){
         System.out.println("업데이트할 정보 선택");
         System.out.println("1. 비밀번호");
         System.out.println("2. 이름");
@@ -122,10 +122,20 @@ public class MemberView {
         return choice;
     }
 
-    public String updateInfomtion(Member member,int index){
-        System.out.println("변경할 정보 입력 : ");
+    public String upDateData(){
+        System.out.print("변경할 정보 입력 : ");
+        sc.nextLine();
         String updateData = sc.nextLine();
         return updateData;
     }
+
+    public String deleteId(){
+        System.out.print("삭제 할 아이디 입력 : ");
+        String deleteId = sc.next();
+        return deleteId;
+    }
+
+
+
 
 }
