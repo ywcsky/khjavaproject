@@ -14,17 +14,43 @@ public class Run {
         while (true) {
             int choice = view.mainMenu();
             switch (choice){
-                case 1 :
-                    List<Member> mList = mCon.printAllMember();
-                    view.showAllMember(mList);
+                case 1 :     // 전체 조회
+                    List<Member> mList = mCon.printAllMember(); // Controller에서 생성된 mList를 mList에 담음
+                    view.showAllMember(mList);                  // mList를 view의 출력메소드인 showAllMember의 매개변수로 사용됨
                     break;
-                case 2 : break;
-                case 3 : break;
+                case 2 :    // 아이디 출력
+                    String memberId = view.inputMemberId();
+                    int index = mCon.findMemberId(memberId);
+                    if(index == -1){
+                        System.out.println("해당 아이디가 없습니다.");
+                        break;
+                    }
+                    Member mOne = mCon.printOneByIndex(index);
+                    view.printOneById(mOne);
+                    break;
+                case 3 :
+                    String memberName = view.inputmemberName();
+                    int nameIndex = mCon.findMemberName(memberName);
+                    if(nameIndex == -1){ System.out.println("없는 이름입니다."); break ;}
+                    Member mTow = mCon.printTwoByIndex(nameIndex);
+                    view.printOneById(mTow);
+                    break;
                 case 4 :
-                    Member member = view.inputMember();     // member객체에 inputMember
-                    mCon.registerMember(member);
+                    Member member = view.inputMember();     // inputMember에서 생성된 member를 member객체에 담음
+                    mCon.registerMember(member);            // ㄴ member객체를 mList(member)에 저장
                     break;
-                case 5 : break;
+                case 5 :
+                    String updateId = view.updateMember();
+                    int updateindex = mCon.findUpdateInfo(updateId);
+                    if(updateindex == -1){
+                        System.out.println("없는 아이디 입니다.");
+                        break;
+                    }
+                    Member updateMember = mCon.updateInfo(updateindex);
+                    int updateindex2 = view.updateInfom();
+                    view.updateInfomtion(updateMember,updateindex2);
+
+                    break;
                 case 6 : break;
                 case 0 : break end;
             }

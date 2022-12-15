@@ -14,7 +14,6 @@ public class ObjectList {
     }
 
     public Object get(int index){
-
         return objects[index];
     }
 
